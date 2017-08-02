@@ -35,9 +35,8 @@ class IncidenceCube:
         # for i in range(self.size * self.size * self.size):
         for i in range(self.size*self.size*self.size):
             # Assume we have a "proper" matrix...
-            #
-            # Pick a random zero from the incidence cube...
 
+            # Pick a random zero from the incidence cube...
             rx = random.randrange(0, self.size)
             ry = random.randrange(0, self.size)
             rz = random.randrange(0, self.size)

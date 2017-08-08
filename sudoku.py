@@ -137,8 +137,8 @@ def make_sudoku(size):
     print(board)
 
 
-for size in range(1, 42):
-    start = time.time()
-    make_sudoku(size)
-    end = time.time()
-    print(size, end - start, sep=': ')
+# for size in range(1, 42):
+#     start = time.time()
+#     make_sudoku(size)
+#     end = time.time()
+#     print(size, end - start, sep=': ')

@@ -1,8 +1,0 @@
-<application>
-  <component name="FileTypeManager" version="17">
-    <extensionMap>
-      <mapping pattern="Jacobson and Matthews" type="C++" />
-      <mapping pattern="jacobson-matthews-latin-square-js" type="JavaScript" />
-    </extensionMap>
-  </component>
-</application>

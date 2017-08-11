@@ -12,6 +12,7 @@ class Board:
             self.__board.append([])
             for columni in range(self.__size ** 2):
                 self.__board[rowi].append(0)
+                # self.__board[rowi].append(-1)
 
         self.__free_numbers = []
         for squarei in range(self.__size ** 2):
@@ -57,7 +58,7 @@ class Board:
             return self.__free_numbers[square_number].pop()
 
     def __put_number_for_square(self, square_number, number):
-        if len(self.__free_numbers[square_number]) > 0:
+        if len(self.__free_numbers[square_number]) >= 0:
             self.__free_numbers[square_number].insert(0, number)
 
     def __move_pointer_forward(self):
@@ -105,19 +106,47 @@ class Board:
         return False
 
     def __step_backward(self):
-        square_number = ((self.__pointer[0] // self.__size) * self.__size) + (self.__pointer[1] // self.__size)
+        if not self.__move_pointer_backward():
+            return False
 
-        self.__move_pointer_backward()
+        square_number = ((self.__pointer[0] // self.__size) * self.__size) + (self.__pointer[1] // self.__size)
         self.__put_number_for_square(square_number, self.__board[self.__pointer[0]][self.__pointer[1]])
+
         self.__board[self.__pointer[0]][self.__pointer[1]] = 0
+
+        return True
 
     def generate_board(self):
         while self.__pointer[0] < self.__size ** 2 and self.__pointer[1] < self.__size ** 2:
+            # print(self.__pointer[0]*10+self.__pointer[1], (self.__size ** 2)*(self.__size ** 2))
             # print(self.__pointer)
             if not self.__step_forward():
-                self.__step_backward()
+                stop_point = self.__pointer[:]
+                backstep_count = 1
+                while self.__board[stop_point[0]][stop_point[1]] == 0:
+                    for i in range(backstep_count):
+                        self.__step_backward()
+                    for i in range(backstep_count + 1):
+                        self.__step_forward()
+                    backstep_count += 1
 
-            print(str(self))
+                    if backstep_count == self.__size ** 2 * self.__size ** 2:
+                        print(backstep_count)
+                        print(self.__free_numbers)
+                        return
+
+                        # print(backstep_count,  str(self), sep='\n')
+
+                        # for r in self.__free_numbers:
+                        #     print(r)
+                        #
+                        # self.__pointer = [self.__size**2-1, self.__size**2-1]
+                        # while self.__step_backward():
+                        #     print()
+                        #
+                        # for r in self.__free_numbers:
+                        #     print(r)
+
 
 
 
@@ -127,7 +156,7 @@ def make_sudoku(size):
     board = Board(size)
     board.generate_board()
 
-    print(board)
+    # print(board)
 
 
 make_sudoku(3)
